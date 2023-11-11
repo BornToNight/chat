@@ -47,13 +47,13 @@ class ChatMessageServiceImpl(
         }.orElseThrow { ResourceNotFoundException("can't find message ($id)") }
     }
 
-    override fun updateStatuses(senderId: String, recipientId: String, status: MessageStatus) {
+    override fun updateStatuses(senderId: String, recipientId: String, messageStatus: MessageStatus) {
         val query = Query(
             Criteria
                 .where("senderId").`is`(senderId)
                 .and("recipientId").`is`(recipientId)
         )
-        val update = Update.update("status", status)
+        val update = Update.update("status", messageStatus)
         mongoOperations.updateMulti(query, update, ChatMessage::class.java)
     }
 }

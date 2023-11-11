@@ -10,6 +10,5 @@ data class ChatRoom(
     val id: String = UUID.randomUUID().toString(),
     val chatId: String = "",
     val senderId: String = "",
-    val senderName: String = "",
     val recipientId: String = "",
 )

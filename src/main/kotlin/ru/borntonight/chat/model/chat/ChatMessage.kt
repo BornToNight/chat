@@ -3,6 +3,7 @@ package ru.borntonight.chat.model.chat
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import ru.borntonight.chat.util.MessageStatus
+import ru.borntonight.chat.util.MessageStatus.*
 import java.util.*
 
 @Document
@@ -16,5 +17,5 @@ data class ChatMessage(
     var recipientName: String = "",
     var content: String = "",
     var timestamp: Date = Date(),
-    var status: MessageStatus = MessageStatus.DELIVERED,
+    var status: MessageStatus = DELIVERED,
 )
