@@ -10,20 +10,16 @@ import org.springframework.web.bind.annotation.PathVariable
 import ru.borntonight.chat.model.chat.ChatMessage
 import ru.borntonight.chat.model.chat.ChatNotification
 import ru.borntonight.chat.service.ChatMessageService
-import ru.borntonight.chat.service.ChatRoomService
 
 
 @Controller
 class ChatController(
     private val messagingTemplate: SimpMessagingTemplate,
     private val chatMessageService: ChatMessageService,
-    private val chatRoomService: ChatRoomService,
 ) {
 
     @MessageMapping("/chat")
     fun processMessage(@Payload chatMessage: ChatMessage) {
-        val chatId = chatRoomService.getChatId(chatMessage.senderId, chatMessage.recipientId, true)
-        chatMessage.chatId = chatId
         val saved: ChatMessage = chatMessageService.save(chatMessage)
         messagingTemplate.convertAndSendToUser(
             chatMessage.recipientId, "/queue/messages",

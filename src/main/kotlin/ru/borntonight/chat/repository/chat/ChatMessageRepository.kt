@@ -12,8 +12,14 @@ interface ChatMessageRepository : MongoRepository<ChatMessage, String> {
         messageStatus: MessageStatus
     ): Long
 
-    fun findByChatId(
-        chatId: String,
+    fun findBySenderIdAndRecipientId(
+        senderId: String,
+        recipientId: String,
+    ): List<ChatMessage>
+
+    fun findByRecipientIdAndSenderId(
+        recipientId: String,
+        senderId: String,
     ): List<ChatMessage>
 
 }

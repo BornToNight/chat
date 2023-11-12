@@ -10,7 +10,6 @@ import java.util.*
 data class ChatMessage(
     @Id
     var id: String = UUID.randomUUID().toString(),
-    var chatId: String = "",
     var senderId: String = "",
     var recipientId: String = "",
     var senderName: String = "",

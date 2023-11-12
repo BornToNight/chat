@@ -15,7 +15,6 @@ import ru.borntonight.chat.util.MessageStatus.RECEIVED
 @Service
 class ChatMessageServiceImpl(
     private val chatMessageRepository: ChatMessageRepository,
-    private val chatRoomService: ChatRoomService,
     private val mongoOperations: MongoOperations
 ) : ChatMessageService {
 
@@ -32,12 +31,13 @@ class ChatMessageServiceImpl(
     }
 
     override fun findChatMessages(senderId: String, recipientId: String): List<ChatMessage> {
-        val chatId = chatRoomService.getChatId(senderId, recipientId, false)
-        val chatMessageList = chatMessageRepository.findByChatId(chatId)
+        val chatMessageList = chatMessageRepository.findBySenderIdAndRecipientId(senderId, recipientId).toMutableList()
+        chatMessageList.addAll(chatMessageRepository.findByRecipientIdAndSenderId(senderId, recipientId))
+        println(chatMessageList)
         if (chatMessageList.isNotEmpty()) {
             updateStatuses(senderId, recipientId, DELIVERED)
         }
-        return chatMessageList
+        return chatMessageList.distinct()
     }
 
     override fun findById(id: String): ChatMessage {
