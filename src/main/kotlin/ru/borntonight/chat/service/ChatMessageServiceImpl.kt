@@ -36,7 +36,7 @@ class ChatMessageServiceImpl(
         if (chatMessageList.isNotEmpty()) {
             updateStatuses(senderId, recipientId, DELIVERED)
         }
-        return chatMessageList.distinct()
+        return chatMessageList.distinct().sortedBy { it.timestamp }
     }
 
     override fun findById(id: String): ChatMessage {
