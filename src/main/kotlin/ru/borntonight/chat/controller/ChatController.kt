@@ -7,12 +7,14 @@ import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
 import ru.borntonight.chat.model.chat.ChatMessage
 import ru.borntonight.chat.model.chat.ChatNotification
 import ru.borntonight.chat.service.ChatMessageService
 
 
 @Controller
+@RequestMapping("api")
 class ChatController(
     private val messagingTemplate: SimpMessagingTemplate,
     private val chatMessageService: ChatMessageService,
@@ -31,7 +33,7 @@ class ChatController(
         )
     }
 
-    @GetMapping("/messages/{senderId}/{recipientId}/count")
+    @GetMapping("/chat/messages/{senderId}/{recipientId}/count")
     fun countNewMessages(
         @PathVariable senderId: String,
         @PathVariable recipientId: String
@@ -39,7 +41,7 @@ class ChatController(
         return ResponseEntity.ok(chatMessageService.countNewMessages(senderId, recipientId))
     }
 
-    @GetMapping("/messages/{senderId}/{recipientId}")
+    @GetMapping("/chat/messages/{senderId}/{recipientId}")
     fun findChatMessages(
         @PathVariable senderId: String,
         @PathVariable recipientId: String
@@ -47,7 +49,7 @@ class ChatController(
         return ResponseEntity.ok(chatMessageService.findChatMessages(senderId, recipientId))
     }
 
-    @GetMapping("/messages/{id}")
+    @GetMapping("/chat/messages/{id}")
     fun findMessage(@PathVariable id: String): ResponseEntity<*> {
         return ResponseEntity.ok(chatMessageService.findById(id))
     }

@@ -16,14 +16,14 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 class WebSocketConfig : WebSocketMessageBrokerConfigurer {
     override fun configureMessageBroker(config: MessageBrokerRegistry) {
-        config.enableSimpleBroker("/user")
-        config.setApplicationDestinationPrefixes("/app")
-        config.setUserDestinationPrefix("/user")
+        config.enableSimpleBroker("/api/chat/user")
+        config.setApplicationDestinationPrefixes("/api")
+        config.setUserDestinationPrefix("/api/chat/user")
     }
 
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
         registry
-            .addEndpoint("/ws")
+            .addEndpoint("/api/chat/ws")
             .setAllowedOriginPatterns("*")
             .withSockJS()
     }

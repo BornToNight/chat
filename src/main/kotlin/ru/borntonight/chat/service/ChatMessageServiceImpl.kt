@@ -33,7 +33,6 @@ class ChatMessageServiceImpl(
     override fun findChatMessages(senderId: String, recipientId: String): List<ChatMessage> {
         val chatMessageList = chatMessageRepository.findBySenderIdAndRecipientId(senderId, recipientId).toMutableList()
         chatMessageList.addAll(chatMessageRepository.findByRecipientIdAndSenderId(senderId, recipientId))
-        println(chatMessageList)
         if (chatMessageList.isNotEmpty()) {
             updateStatuses(senderId, recipientId, DELIVERED)
         }
